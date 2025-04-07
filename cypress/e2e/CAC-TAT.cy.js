@@ -6,7 +6,7 @@ describe('Suíte de Testes', () => {
   })
 
   it('Verificar o título da aplicação', () => {
-    cy.title().should('eq', 'Central de Atendimento ao Cliente T')
+    cy.title().should('eq', 'Central de Atendimento ao Cliente TAT')
   })
 
   it('Preencher campos do Formulario', () => {

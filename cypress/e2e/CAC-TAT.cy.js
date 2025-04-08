@@ -9,69 +9,83 @@ describe('Suíte de Testes', () => {
     cy.title().should('eq', 'Central de Atendimento ao Cliente TAT')
   })
 
-  it('Preencher campos do Formulario', () => {
-    cy.get('#firstName')
-      .should('be.visible')
-      .type('Clarêncio')
-    cy.get('#firstName').should('have.value', 'Clarêncio')
+  Cypress._.times(3, () => {//loadash para repetir teste
+    it('Preencher campos do Formulario', () => {
+      cy.clock()
 
-    cy.get('#lastName')
-      .should('be.visible')
-      .type('Testador')
-    cy.get('#lastName').should('have.value', 'Testador')
+      cy.get('#firstName')
+        .should('be.visible')
+        .type('Clarêncio')
+      cy.get('#firstName').should('have.value', 'Clarêncio')
 
-    cy.get('#email')
-      .should('be.visible')
-      .type('email@email.com.br')
-    cy.get('#email').should('have.value', 'email@email.com.br')
+      cy.get('#lastName')
+        .should('be.visible')
+        .type('Testador')
+      cy.get('#lastName').should('have.value', 'Testador')
 
-    cy.get('#phone')
-      .should('be.visible')
-      .type('999999999')
-    cy.get('#phone').should('have.value', '999999999')
+      cy.get('#email')
+        .should('be.visible')
+        .type('email@email.com.br')
+      cy.get('#email').should('have.value', 'email@email.com.br')
 
-    cy.get('#open-text-area')
-      .should('be.visible')
-      .type('Com o Cypress, você pode facilmente criar testes para suas aplicações web modernas.')
-    cy.get('#open-text-area').should('have.value', 'Com o Cypress, você pode facilmente criar testes para suas aplicações web modernas.')
+      cy.get('#phone')
+        .should('be.visible')
+        .type('999999999')
+      cy.get('#phone').should('have.value', '999999999')
 
-    cy.contains('button[type="submit"]', 'Enviar').click()
+      cy.get('#open-text-area')
+        .should('be.visible')
+        .type('Com o Cypress, você pode facilmente criar testes para suas aplicações web modernas.')
+      cy.get('#open-text-area').should('have.value', 'Com o Cypress, você pode facilmente criar testes para suas aplicações web modernas.')
 
-    cy.contains('.success', 'Mensagem enviada com sucesso.')
+      cy.contains('button[type="submit"]', 'Enviar').click()
 
+      cy.contains('.success', 'Mensagem enviada com sucesso.')
+
+      cy.tick(3000)
+
+      cy.get('.success').should('not.be.visible')
+    });
   });
 
-  it('Exibir mensagem de erro ao submeter o formulário com email inválido', () => {
-    const textolongo = Cypress._.repeat('Com o Cypress, você pode facilmente criar testes para suas aplicações web modernas.', 3)
+  Cypress._.times(5, () => {
+    it('Exibir mensagem de erro ao submeter o formulário com email inválido', () => {
+      cy.clock()
+      const textolongo = Cypress._.repeat('Com o Cypress, você pode facilmente criar testes para suas aplicações web modernas.', 3)
 
-    cy.get('#firstName')
-      .should('be.visible')
-      .type('Clarêncio')
-    cy.get('#firstName').should('have.value', 'Clarêncio')
+      cy.get('#firstName')
+        .should('be.visible')
+        .type('Clarêncio')
+      cy.get('#firstName').should('have.value', 'Clarêncio')
 
-    cy.get('#lastName')
-      .should('be.visible')
-      .type('Testador')
-    cy.get('#lastName').should('have.value', 'Testador')
+      cy.get('#lastName')
+        .should('be.visible')
+        .type('Testador')
+      cy.get('#lastName').should('have.value', 'Testador')
 
-    cy.get('#email')
-      .should('be.visible')
-      .type('teste#email.com.br')
-    cy.get('#email').should('have.value', 'teste#email.com.br')
+      cy.get('#email')
+        .should('be.visible')
+        .type('teste#email.com.br')
+      cy.get('#email').should('have.value', 'teste#email.com.br')
 
-    cy.get('#phone')
-      .should('be.visible')
-      .type('999999999')
-    cy.get('#phone').should('have.value', '999999999')
+      cy.get('#phone')
+        .should('be.visible')
+        .type('999999999')
+      cy.get('#phone').should('have.value', '999999999')
 
-    cy.get('#open-text-area')
-      .should('be.visible')
-      .type(textolongo, { delay: 0 })
+      cy.get('#open-text-area')
+        .should('be.visible')
+        .type(textolongo, { delay: 0 })
 
-    cy.contains('button[type="submit"]', 'Enviar').click()
+      cy.contains('button[type="submit"]', 'Enviar').click()
 
-    cy.contains('span[class="error"]', 'Valide os campos obrigatórios!')
+      cy.contains('span[class="error"]', 'Valide os campos obrigatórios!')
 
+      cy.tick(3000)
+
+      cy.get('span[class="error"]').should('not.be.visible')
+
+    });
   });
 
   it('Verificar que campo telefone só aceita numeros', () => {
@@ -85,6 +99,7 @@ describe('Suíte de Testes', () => {
   });
 
   it('Verificar campo obrigatório para telefone', () => {
+    cy.clock()
     cy.get('#firstName').type('Clarêncio')
     cy.get('#lastName').type('Testador')
     cy.get('#email').type('teste@email.com.br')
@@ -94,6 +109,8 @@ describe('Suíte de Testes', () => {
     cy.contains('button[type="submit"]', 'Enviar').click()
 
     cy.contains('span[class="error"]', 'Valide os campos obrigatórios!')
+    cy.tick(3000)
+    cy.get('span[class="error"]').should('not.be.visible')
   });
 
   it('Preencher e limpar campos', () => {
@@ -129,23 +146,29 @@ describe('Suíte de Testes', () => {
       .should('not.have.value')
   });
 
-  it('Exibir alerta de campos obrigatórios', () => {
 
-    cy.contains('button[type="submit"]', 'Enviar').click()
+  Cypress._.times(5, () => {
+    it('Exibir alerta de campos obrigatórios', () => {
+      cy.clock()
 
-    cy.contains('span[class="error"]', 'Valide os campos obrigatórios!')
+      cy.contains('button[type="submit"]', 'Enviar').click()
 
+      cy.contains('span[class="error"]', 'Valide os campos obrigatórios!')
+      cy.tick(3000)
+      cy.get('span[class="error"]').should('not.be.visible')
+    });
   });
 
   it('Enviar formulario com comando Customizado 1', () => {
-
+    cy.clock()
     cy.preencherFormularioEnviar_UM()
 
     cy.contains('.success', 'Mensagem enviada com sucesso.')
-
+    cy.tick(3000)
+    cy.get('.success').should('not.be.visible')
   });
   it('Enviar formulario com comando Customizado 2', () => {
-
+    cy.clock()
     const dados = {
       primeiroNome: 'Socrates',
       sobreNome: 'filósofo',
@@ -156,14 +179,17 @@ describe('Suíte de Testes', () => {
     cy.preencherFormularioEnviar_DOIS(dados)
 
     cy.contains('.success', 'Mensagem enviada com sucesso.')
+    cy.tick(3000)
+    cy.get('.success').should('not.be.visible')
   });
 
   it('Enviar formulario com comando Customizado 3', () => {
-
+    cy.clock()
     cy.preencherFormularioEnviar_TRES()
 
     cy.contains('.success', 'Mensagem enviada com sucesso.')
-
+    cy.tick(3000)
+    cy.get('.success').should('not.be.visible')
   });
 
   it('Selecionar o produto (YouTube) pelo texto', () => {
@@ -284,5 +310,22 @@ describe('Suíte de Testes', () => {
     cy.contains('h1', 'CAC TAT - Política de Privacidade').should('be.visible')
 
   });
+
+  it('Exibir e ocultar as mensagens de sucesso e erro usando .invoke()', () => {
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+  })
   
 })

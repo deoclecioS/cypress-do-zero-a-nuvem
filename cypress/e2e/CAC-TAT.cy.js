@@ -327,5 +327,33 @@ describe('Suíte de Testes', () => {
       .invoke('hide')
       .should('not.be.visible')
   })
-  
+
+  it('Preencher o campo da área de texto usando o comando invoke', () => {
+
+    const textoRepetido = Cypress._.repeat('Olá Cypress, ', 10)
+
+    cy.get('#open-text-area').invoke('val', textoRepetido)
+      .should('have.value', textoRepetido)
+  });
+
+  it('Exibir o gato escondido', () => {
+    cy.get('#cat')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', '🐈')
+      .invoke('hide')
+      .should('not.be.visible')
+  });
+
+  it('Chamar texto diferente com o invoke método', () => {
+    cy.get('#title')
+      .invoke('text', 'CAT TAT')
+      .should('be.visible')
+
+      cy.get('#subtitle')
+      .invoke('text', 'Encerrando o Curso Cypress do Zero até a Nuvem!!')
+      .should('be.visible')
+  });
+
 })
